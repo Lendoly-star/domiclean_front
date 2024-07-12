@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Paiement
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="pay()" #paimentForm="ngForm">
+    <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+    <ion-button expand="full" type="submit">Pay</ion-button>
+  </form>
+  <div ngIf="paimentResult">
+    {{ paimentResult }}
+  </div>
+</ion-content>

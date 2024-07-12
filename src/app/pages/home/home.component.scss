@@ -1,0 +1,159 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+section{
+  background-color: #005CB9;
+}
+
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.text {
+  font-size: 1.2rem;
+  padding: 1rem;
+}
+
+.text h1{
+  color: white;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.flex_g {
+  flex: 1;
+  padding: 1rem;
+}
+
+.flex_d {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-card {
+  background-color: #f0f0f0; /* Couleur de fond grise */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal-card h2 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+}
+
+.modal-card h3 {
+  margin: 0 0 1rem;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.modal-card p {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  color: #666;
+}
+
+.service-hours {
+  margin-top: 1rem;
+}
+
+.service-hour {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.service-hour p {
+  margin: 0;
+}
+
+.grand_flex {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background-color: white;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.titre {
+  margin-bottom: 2rem;
+}
+
+.text h1 {
+  font-size: 2rem;
+  color: #333;
+  margin: 0;
+  text-align: left;
+}
+
+.service {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.service > div {
+  flex: 1 1 calc(50% - 2rem); /* 2 elements per row with gap of 2rem */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.pContainer {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  font-size: 2rem;
+  color: #005cb9;
+  margin-right: 1rem;
+}
+
+.pTitre h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0;
+  text-decoration: underline;
+}
+
+
+
+@media (max-width: 768px) {
+  .flex {
+    flex-direction: column;
+  }
+
+  .modal-card {
+    margin-top: 1rem;
+  }
+
+  .service > div {
+    flex: 1 1 100%; /* Full width on smaller screens */
+  }
+}

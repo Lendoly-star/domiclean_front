@@ -1,0 +1,157 @@
+<app-header></app-header>
+
+<!-- dashboard.component.html -->
+<!--<div class="dashboard-container">-->
+<!--  &lt;!&ndash; Appointment Booking Form &ndash;&gt;-->
+<!--  <form [formGroup]="RdvForm" (ngSubmit)="onSubmit()">-->
+<!--    <div class="form-group">-->
+<!--      <label for="date">Date:</label>-->
+<!--      <input type="date" id="date" formControlName="date">-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="serviceType">Type de Service:</label>-->
+<!--      <select id="serviceType" formControlName="serviceType">-->
+<!--        <option *ngFor="let type of typesOfService" [value]="type">{{ type }}</option>-->
+<!--      </select>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="description">Descriptif:</label>-->
+<!--      <textarea id="description" formControlName="description"></textarea>-->
+<!--    </div>-->
+<!--    <button type="submit" [disabled]="!RdvForm.valid">Réserver</button>-->
+<!--  </form>-->
+
+<!--  &lt;!&ndash; List of Existing Appointments &ndash;&gt;-->
+<!--  <div class="appointments-list" *ngIf="rdv.length > 0">-->
+<!--    <h2>Rendez-vous existants:</h2>-->
+<!--    <div *ngFor="let appointment of appointments" class="appointment-item">-->
+<!--      <p>Date: {{ appointment.date | date: 'medium' }}</p>-->
+<!--      <p>Type de service: {{ appointment.serviceType }}</p>-->
+<!--      <p>Description: {{ appointment.description }}</p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
+
+
+
+<!--<nav class="main-content">-->
+
+<!--<div class="container-fluid py-4">-->
+<!--  <div class="row">-->
+<!--    <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">-->
+<!--      <div class="card">-->
+<!--        <div class="row mt-4">-->
+<!--          <div *ngIf="userRole === 'admin' || userRole === 'client' || userRole === 'pro'" class="col-lg-12 col-md-12">-->
+<!--            <h2 class="mb-4">Rendez-vous</h2>-->
+<!--            <div class="row">-->
+<!--              <div *ngFor="let appointment of appointments" class="col-lg-4 col-md-6 mb-4">-->
+<!--                <div class="card appointment-card">-->
+<!--                  <div class="card-header">-->
+<!--                    <h6 class="mb-0">{{ appointment.date | date: 'mediumDate' }}</h6>-->
+<!--                  </div>-->
+<!--                  <div class="card-body">-->
+<!--                    <p><strong>Type de service:</strong> {{ appointment.serviceType }}</p>-->
+<!--                    <p><strong>Description:</strong> {{ appointment.description }}</p>-->
+<!--                    <p *ngIf="userRole === 'admin' || userRole === 'pro'"><strong>Client:</strong> {{ appointment.clientName }}</p>-->
+<!--                    <p *ngIf="userRole === 'admin' || userRole === 'client'"><strong>Professionnel:</strong> {{ appointment.proName }}</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  &lt;!&ndash; Formulaire de prise de rendez-vous &ndash;&gt;-->
+<!--  <div class="row mt-4">-->
+<!--    <div class="col-lg-12 col-md-12">-->
+<!--      <div class="card">-->
+<!--        <div class="card-header">-->
+<!--          <h6>Prenez rendez-vous</h6>-->
+<!--        </div>-->
+<!--        <div class="card-body">-->
+<!--          <form [formGroup]="RdvForm" (ngSubmit)="onSubmit()">-->
+<!--            <div class="form-group">-->
+<!--              <label for="date">Date:</label>-->
+<!--              <input type="date" id="date" class="form-control" formControlName="date">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="serviceType">Type de Service:</label>-->
+<!--              <select id="serviceType" class="form-control" formControlName="serviceType">-->
+<!--                <option *ngFor="let type of typesOfService" [value]="type">{{ type }}</option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="description">Descriptif:</label>-->
+<!--              <textarea id="description" class="form-control" formControlName="description"></textarea>-->
+<!--            </div>-->
+<!--            <button type="submit" class="btn btn-primary" [disabled]="!RdvForm.valid">Réserver</button>-->
+<!--          </form>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Liste des rendez-vous &ndash;&gt;-->
+<!--  <div class="row mt-4">-->
+<!--    <div class="col-lg-12 col-md-12">-->
+<!--      <div class="card">-->
+<!--        <div class="card-header">-->
+<!--          <h6>Liste de rendez-vous</h6>-->
+<!--        </div>-->
+<!--        <div class="card-body">-->
+<!--          <div class="appointments-list" *ngIf="appointments.length > 0">-->
+<!--            <div *ngFor="let appointment of appointments" class="appointment-item">-->
+<!--              <p>Date: {{ appointment.date | date: 'medium' }}</p>-->
+<!--              <p>Type de service: {{ appointment.serviceType }}</p>-->
+<!--              <p>Description: {{ appointment.description }}</p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div *ngIf="appointments.length === 0">-->
+<!--            <p>No appointments found.</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</nav>-->
+
+
+
+<div class="dashboard-container">
+  <app-sidebar-dashboard></app-sidebar-dashboard>
+    <!-- Liste des rendez-vous -->
+    <div class="row mt-4">
+      <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h6>Liste de rendez-vous</h6>
+          </div>
+          <div class="card-body">
+            <div class="appointments-list" *ngIf="appointments.length > 0">
+              <div *ngFor="let appointment of appointments" class="appointment-item">
+                <p>Date: {{ appointment.date | date: 'medium' }}</p>
+                <p>Type de service: {{ appointment.serviceType }}</p>
+                <p>Description: {{ appointment.description }}</p>
+              </div>
+            </div>
+            <div *ngIf="appointments.length === 0">
+              <p>No appointments found.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<!--<app-sidebar-dashboard></app-sidebar-dashboard>-->
+
+
+<!--<app-footer></app-footer>-->

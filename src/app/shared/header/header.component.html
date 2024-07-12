@@ -1,0 +1,22 @@
+<ion-content>
+  <section>
+    <div class="container">
+      <div class="logo-title">
+        <img src="{{logo}}" alt="Logo Domiclean" class="logo">
+      </div>
+      <div class="link">
+        <nav>
+          <ul>
+            <li><a href="#">Accueil</a></li>
+            <li *ngIf="!isAuthenticated"><a href="#">Inscription/Connexion</a></li>
+            <li><a href="#">Prendre Rendez-vous</a></li>
+            <li *ngIf="isAuthenticated">
+              <a href="#">{{ userName }}</a>
+              <ion-button (click)="logout()">Logout</ion-button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </section>
+</ion-content>
