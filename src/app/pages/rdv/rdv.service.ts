@@ -24,11 +24,15 @@ export class RdvService {
   }
 
   addAvailability(availability: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/pro/addAvailability`, availability);
+    return this.http.post<any>(`${this.apiUrl}/pro/addAvailability`, availability, { headers: this.getAuthHeaders() });
   }
 
   getServices(): Observable<any[]> {
     return this.http.post<any[]>(`${this.apiUrl}/pro/getAllServices`, {}, { headers: this.getAuthHeaders() });
+  }
+
+  getProServices(): Observable<any[]> {
+    return this.http.post<any[]>(`${this.apiUrl}/pro/proServices`, {}, { headers: this.getAuthHeaders() });
   }
 
   getAvailabilities(pro_id: number): Observable<any[]> {
@@ -49,4 +53,3 @@ export class RdvService {
     });
   }
 }
-

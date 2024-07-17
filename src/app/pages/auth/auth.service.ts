@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable, tap} from 'rxjs';
 import { Router } from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 
+
 interface User {
   id: number;
   name: string;
@@ -32,6 +33,7 @@ export class AuthService {
       })
     );
   }
+
 
   logout(): void {
     localStorage.removeItem('token');

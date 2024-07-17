@@ -47,9 +47,9 @@ export class AddServiceComponent implements OnInit {
       const proId = this.getLoggedInProId(); // Assurez-vous de récupérer l'ID du pro connecté
 
       const serviceData = { proId, services: [serviceId] };
-      console.log(serviceData)
+      // console.log(serviceData)
       this.rdvService.addService(serviceData).subscribe(response => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/add-availability']);
         console.log('Services ajoutés avec succès');
         this.serviceForm.reset();
       }, error => {

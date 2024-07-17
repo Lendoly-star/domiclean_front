@@ -7,17 +7,30 @@
       <div class="card-body">
         <form [formGroup]="availabilityForm" (ngSubmit)="onAddAvailability()">
           <div class="form-group">
-            <label for="availabilityDate">Date:</label>
-            <input type="date" id="availabilityDate" formControlName="availabilityDate" class="form-control">
+            <label for="serviceId">Service:</label>
+            <select id="serviceId" formControlName="serviceId" class="form-control">
+              <option *ngFor="let service of services" [value]="service.id">{{ service.service_name }}</option>
+            </select>
           </div>
           <div class="form-group">
-            <label for="availabilityTime">Heure:</label>
-            <input type="time" id="availabilityTime" formControlName="availabilityTime" class="form-control">
+            <label for="date">Date:</label>
+            <input type="date" id="date" formControlName="date" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="startTime">Heure de début:</label>
+            <input type="time" id="startTime" formControlName="startTime" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="endTime">Heure de fin:</label>
+            <input type="time" id="endTime" formControlName="endTime" class="form-control">
           </div>
           <button type="submit" class="btn btn-primary" [disabled]="!availabilityForm.valid">Ajouter la disponibilité</button>
         </form>
       </div>
     </div>
   </div>
+
+
+
 </ion-content>
 
