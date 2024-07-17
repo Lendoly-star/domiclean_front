@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 import { Router } from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 
@@ -23,21 +23,17 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/user/register_user`, user);
   }
 
-  login(credentials: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/user/login_user`, credentials);
+  login(email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/user/login_user`, { email, password }).pipe(
+      tap(response => {
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+        }
+      })
+    );
   }
 
-
-  // logout() {
-  //   localStorage.removeItem('user');
-  //   this.userSubject.next(null);
-  //   this.router.navigate(['/']);
-  // }
-  //
-  // autoLogin() {
-  //   const user = localStorage.getItem('user');
-  //   if (user) {
-  //     this.userSubject.next(JSON.parse(user));
-  //   }
-  // }
+  logout(): void {
+    localStorage.removeItem('token');
+  }
 }

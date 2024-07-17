@@ -11,13 +11,16 @@ export class RdvService {
 
   constructor(private http: HttpClient) {}
 
-  // private getHeaders() {
-  //   const token = localStorage.getItem('token');
-  //   return new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  // }
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token'); // Assurez-vous que le token est stocké dans localStorage lors de la connexion
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  }
 
   addService(service: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/pro/addService`, service);
+    return this.http.post<any>(`${this.apiUrl}/pro/addService`, service, { headers: this.getAuthHeaders() });
   }
 
   addAvailability(availability: any): Observable<any> {
@@ -25,7 +28,7 @@ export class RdvService {
   }
 
   getServices(): Observable<any[]> {
-    return this.http.post<any[]>(`${this.apiUrl}/pro/getAllServices`, {});
+    return this.http.post<any[]>(`${this.apiUrl}/pro/getAllServices`, {}, { headers: this.getAuthHeaders() });
   }
 
   getAvailabilities(pro_id: number): Observable<any[]> {

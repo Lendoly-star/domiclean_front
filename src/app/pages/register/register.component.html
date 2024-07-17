@@ -1,32 +1,42 @@
 <app-header></app-header>
 
 <ion-content>
-  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="nom">Nom:</label>
-      <input type="text" id="nom" formControlName="nom" class="form-control">
+  <div class="form-container">
+    <div class="card">
+      <div class="card-header">
+        <h2>S'inscrire</h2>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="nom">Nom:</label>
+            <input type="text" id="nom" formControlName="nom" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="prenom">Prénom:</label>
+            <input type="text" id="prenom" formControlName="prenom" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" formControlName="email" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" formControlName="password" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="role">Rôle:</label>
+            <select id="role" formControlName="role" class="form-control">
+              <option value="client">Client</option>
+              <option value="pro">Professionnel</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">S'inscrire</button>
+        </form>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="prenom">Prénom:</label>
-      <input type="text" id="prenom" formControlName="prenom" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="password">Mot de passe:</label>
-      <input type="password" id="password" formControlName="password" class="form-control">
-    </div>
-    <div class="form-group">
-      <label for="role">Rôle:</label>
-      <select id="role" formControlName="role" class="form-control">
-        <option value="client">Client</option>
-        <option value="pro">Professionnel</option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">S'inscrire</button>
-  </form>
+  </div>
+
 
 </ion-content>
 

@@ -44,10 +44,10 @@ export class AddServiceComponent implements OnInit {
   onSubmit(): void {
     if (this.serviceForm.valid) {
       const serviceId = this.serviceForm.controls['service_id'].value;
-      const proId = this.serviceForm.controls['proId'].value;
+      const proId = this.getLoggedInProId(); // Assurez-vous de récupérer l'ID du pro connecté
 
       const serviceData = { proId, services: [serviceId] };
-
+      console.log(serviceData)
       this.rdvService.addService(serviceData).subscribe(response => {
         this.router.navigate(['/dashboard']);
         console.log('Services ajoutés avec succès');
@@ -58,5 +58,16 @@ export class AddServiceComponent implements OnInit {
     } else {
       console.error('Formulaire invalide');
     }
+  }
+
+
+  getLoggedInProId(): string {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('Token is missing');
+    }
+
+    const decodedToken = JSON.parse(atob(token.split('.')[1])); // Assurez-vous que votre token est bien au format JWT
+    return decodedToken.id;
   }
 }
