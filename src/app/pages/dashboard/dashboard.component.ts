@@ -44,23 +44,23 @@ export class DashboardComponent implements OnInit{
       description: ['', Validators.required]
     });
 
-    this.fetchRdv();
+    // this.fetchRdv();
   }
 
   onSubmit() {
     if (this.RdvForm.valid) {
       this.RdvService.bookRdv(this.RdvForm.value).subscribe(() => {
-        this.fetchRdv();
+        // this.fetchRdv();
         this.RdvForm.reset();
       });
     }
   }
 
-  fetchRdv() {
-    this.RdvService.getAllRdv().subscribe(data => {
-      this.appointments = data;
-    });
-  }
+  // fetchRdv() {
+  //   this.RdvService.getAllRdv().subscribe(data => {
+  //     this.appointments = data;
+  //   });
+  // }
 
 
 }

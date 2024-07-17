@@ -55,12 +55,12 @@ export class SidebarDashboardComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
-    this.authService.user$.subscribe(user => {
-      if (user) {
-        this.userRole = user.role;
-        this.userData = user;
-      }
-    });
+    // this.authService.user$.subscribe(user => {
+    //   if (user) {
+    //     this.userRole = user.role;
+    //     this.userData = user;
+    //   }
+    // });
   }
 
   toggleSidebar(): void {
@@ -72,7 +72,7 @@ export class SidebarDashboardComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.logout();
+    // this.authService.logout();
     this.router.navigate(['/login']);
   }
 

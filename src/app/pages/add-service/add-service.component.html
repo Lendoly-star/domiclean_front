@@ -1,0 +1,24 @@
+<app-header></app-header>
+
+<ion-content>
+  <div class="form-container">
+    <div class="card">
+      <div class="card-header">
+        <h2>Ajouter un service</h2>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="service_id">Nom du service :</label>
+            <select id="service_id" formControlName="service_id" class="form-control">
+              <option *ngFor="let service of services" [value]="service.id">{{ service.service_name }}</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!serviceForm.valid">Ajouter</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<app-footer></app-footer>

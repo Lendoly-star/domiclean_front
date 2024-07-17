@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,32 +7,43 @@ import { Observable } from 'rxjs';
 })
 export class RdvService {
 
+  private apiUrl = 'http://localhost:4000/api';
+
   constructor(private http: HttpClient) {}
 
-  // Récupère les rendez-vous pour un utilisateur spécifique
-  getUserRdv(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(`/api/rdv/user/${userId}`);
+  // private getHeaders() {
+  //   const token = localStorage.getItem('token');
+  //   return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  // }
+
+  addService(service: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/pro/addService`, service);
   }
 
-  // Récupère les rendez-vous pour un professionnel spécifique
-  getProRdv(proId: number): Observable<any[]> {
-    return this.http.get<any[]>(`/api/rdv/pro/${proId}`);
+  addAvailability(availability: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/pro/addAvailability`, availability);
   }
 
-  // Récupère tous les rendez-vous pour un administrateur
-  getAdminRdv(number: number): Observable<any[]> {
-    return this.http.get<any[]>('/api/rdv/admin');
+  getServices(): Observable<any[]> {
+    return this.http.post<any[]>(`${this.apiUrl}/pro/getAllServices`, {});
   }
 
-  // Récupère tous les rendez-vous (Utilisé par l'admin pour voir tous les rendez-vous)
-  getAllRdv(): Observable<any[]> {
-    return this.http.get<any[]>('/api/rdv/all');
+  getAvailabilities(pro_id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/pro/availabilities/${pro_id}`);
   }
 
-  //
-  bookRdv(RdvData: any): Observable<any> {
-    // @ts-ignore
-    return this.http.post('api/rdv/book');
+  bookRdv(appointmentData: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/rdv/bookNewRdv`, appointmentData);
+  }
+
+  getRdv(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/rdv/getRdv`);
+  }
+
+  getAvailablePros(serviceId: number, date: string, time: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/rdv/getAvailabilities`, {
+      params: { serviceId: serviceId.toString(), date, time }
+    });
   }
 }
 

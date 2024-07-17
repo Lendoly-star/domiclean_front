@@ -1,19 +1,25 @@
 import {Component, OnInit} from '@angular/core';
-import { IonicModule } from "@ionic/angular";
 import {FooterComponent} from "../../shared/footer/footer.component";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {HeaderComponent} from "../../shared/header/header.component";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AuthService} from "./auth.service";
+import {IonicModule} from "@ionic/angular";
+import {AuthService} from "../auth/auth.service";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-auth',
+  selector: 'app-register',
   standalone: true,
-  imports: [IonicModule, FooterComponent, HeaderComponent, ReactiveFormsModule],
-  templateUrl: './auth.component.html',
-  styleUrl: './auth.component.scss'
+    imports: [
+        FooterComponent,
+        FormsModule,
+        HeaderComponent,
+        IonicModule,
+        ReactiveFormsModule
+    ],
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.scss'
 })
-export class AuthComponent implements OnInit{
+export class RegisterComponent implements OnInit{
   registerForm!: FormGroup;
 
   constructor(

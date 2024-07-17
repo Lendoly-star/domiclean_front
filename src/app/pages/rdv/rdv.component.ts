@@ -1,3 +1,5 @@
+// @ts-ignore
+
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../auth/auth.service";
 import { RdvService } from "./rdv.service";
@@ -14,63 +16,82 @@ import {HeaderComponent} from "../../shared/header/header.component";
   styleUrls: ['./rdv.component.scss']
 })
 export class RdvComponent implements OnInit {
-  userRole: 'client' | 'pro' | 'admin' | null = null;
-  userId: number | null = null;
+  rdvForm!: FormGroup;
   typesOfService = ['Bricolage', 'Jardinage', 'Ménage'];
-  rdvForm: FormGroup; // Correction du nom de la variable pour suivre les conventions
-  rdvs: any[] = []; // Correction du nom de la variable pour suivre les conventions
-  RdvForm!: FormGroup;
+  services: any[] = [];
+  availablePros: any[] = [];
+  availabilities: any[] = [];
 
-  constructor(
-    private authService: AuthService,
-    private rdvService: RdvService, // Correction du nom de la variable pour suivre les conventions
-    private fb: FormBuilder // Ajout de FormBuilder pour construire le formulaire
-  ) {
-    // Initialiser le formulaire dans le constructeur
+  constructor(private fb: FormBuilder, private rdvService: RdvService) {
+  }
+
+  ngOnInit(): void {
     this.rdvForm = this.fb.group({
+      id_client: ['', Validators.required],
+      id_pro: ['', Validators.required],
+      service_id: ['', Validators.required],
       date: ['', Validators.required],
-      serviceType: ['', Validators.required],
-      description: ['', Validators.required]
+      time: ['', Validators.required],
+      address: ['', Validators.required],
+      description: ['']
     });
   }
 
-  ngOnInit() {
-    this.authService.user$.subscribe(user => {
-      if (user) {
-        this.userRole = user.role;
-        this.userId = user.id; // Assurez-vous que userId est mis à jour avec l'ID utilisateur actuel
-        this.loadRdv();
+  loadServices(): void {
+    this.rdvService.getServices().subscribe(data => {
+      this.services = data;
+    });
+  }
+
+  loadAvailabilities(pro_id: number): void {
+    this.rdvService.getAvailabilities(pro_id).subscribe(data => {
+      this.availabilities = data;
+    });
+  }
+
+  fetchAvailablePros(service_id: number, date: string, time: string) {
+    this.rdvService.getAvailablePros(service_id, date, time).subscribe(pros => {
+      this.availablePros = pros;
+    });
+  }
+
+  onBookAppointment(): void {
+    if (this.rdvForm.valid) {
+      this.rdvService.bookRdv(this.rdvForm.value).subscribe(response => {
+        console.log('Rendez-vous pris avec succès');
+        this.rdvForm.reset();
+      });
+    }
+  }
+
+  setupServiceIdValueChanges(): void {
+    this.rdvForm.get('service_id')?.valueChanges.subscribe(service_id => {
+      const date = this.rdvForm.get('date')?.value;
+      const time = this.rdvForm.get('time')?.value;
+      if (service_id && date && time) {
+        this.fetchAvailablePros(service_id, date, time);
       }
     });
   }
 
-  loadRdv() {
-    if (this.userRole === 'client') {
-      this.rdvService.getUserRdv(this.userId!).subscribe(rdv => {
-        this.rdvs = rdv;
-      });
-    } else if (this.userRole === 'pro') {
-      this.rdvService.getProRdv(this.userId!).subscribe(rdv => {
-        this.rdvs = rdv;
-      });
-    } else if (this.userRole === 'admin') {
-      this.rdvService.getAllRdv().subscribe(rdv => {
-        this.rdvs = rdv;
-      });
-    }
+  setupDateValueChanges(): void {
+    this.rdvForm.get('date')?.valueChanges.subscribe(date => {
+      const service_id = this.rdvForm.get('service_id')?.value;
+      const time = this.rdvForm.get('time')?.value;
+      if (service_id && date && time) {
+        this.fetchAvailablePros(service_id, date, time);
+      }
+    });
   }
 
-  onSubmit() {
-    if (this.rdvForm.valid) {
-      // Envoie les données du formulaire au service
-      this.rdvService.bookRdv(this.rdvForm.value).subscribe({
-        next: (data) => {
-          console.log('Rendez-vous enregistré avec succès', data);
-          this.rdvForm.reset();
-          this.loadRdv(); // Recharger les rendez-vous après l'ajout
-        },
-        error: (error) => console.error('Erreur lors de la prise de rendez-vous', error)
-      });
-    }
+  setupTimeValueChanges(): void {
+    this.rdvForm.get('time')?.valueChanges.subscribe(time => {
+      const service_id = this.rdvForm.get('service_id')?.value;
+      const date = this.rdvForm.get('date')?.value;
+      if (service_id && date && time) {
+        this.fetchAvailablePros(service_id, date, time);
+      }
+    });
   }
+
 }

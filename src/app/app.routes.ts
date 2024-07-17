@@ -9,6 +9,10 @@ import {ProComponent} from "./pages/pro/pro.component";
 import {DevisComponent} from "./pages/devis/devis.component";
 import {RoleGuard} from "./pages/auth/role.guard";
 import {AuthGuard} from "./pages/auth/auth.guard";
+import {RegisterComponent} from "./pages/register/register.component";
+import {LoginComponent} from "./pages/login/login.component";
+import {AddServiceComponent} from "./pages/add-service/add-service.component";
+import {AddAvailabilityComponent} from "./pages/add-availability/add-availability.component";
 
 export const routes: Routes = [
   {
@@ -65,6 +69,22 @@ export const routes: Routes = [
   { path: 'logout',
     redirectTo: '/',
     pathMatch: 'full'
+  },
+  {
+    path: "register",
+    component: RegisterComponent
+  },
+  {
+    path: "login",
+    component: LoginComponent
+  },
+  {
+    path: "add-service",
+    component: AddServiceComponent
+  },
+  {
+    path: "add-availability",
+    component: AddAvailabilityComponent
   },
 
 

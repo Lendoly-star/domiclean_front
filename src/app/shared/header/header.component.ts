@@ -19,13 +19,13 @@ export class HeaderComponent {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.authService.user$.subscribe(user => {
-      this.isAuthenticated = !!user;
-      this.userName = user ? user.name : null;
-    });
+    // this.authService.user$.subscribe(user => {
+    //   this.isAuthenticated = !!user;
+    //   this.userName = user ? user.name : null;
+    // });
   }
 
   logout() {
-    this.authService.logout();
+    // this.authService.logout();
   }
 }
