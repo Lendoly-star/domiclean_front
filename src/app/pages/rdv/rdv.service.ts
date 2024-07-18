@@ -52,4 +52,10 @@ export class RdvService {
       params: { serviceId: serviceId.toString(), date, time }
     });
   }
+
+  getProsByService(serviceId: number): Observable<any[]> {
+    return this.http.post<any[]>(`${this.apiUrl}/pro/getProsByService`, {
+      params: { serviceId: serviceId.toString() },
+    }, {headers: this.getAuthHeaders(),});
+  }
 }

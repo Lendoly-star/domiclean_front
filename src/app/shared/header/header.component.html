@@ -12,7 +12,7 @@
             <li><a href="#">Prendre Rendez-vous</a></li>
             <li *ngIf="isAuthenticated">
               <a href="#">{{ userName }}</a>
-              <ion-button (click)="logout()">Logout</ion-button>
+              <button (click)="logout()">Déconnexion</button>
             </li>
           </ul>
         </nav>

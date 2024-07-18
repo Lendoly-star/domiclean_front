@@ -13,6 +13,8 @@ import {RegisterComponent} from "./pages/register/register.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {AddServiceComponent} from "./pages/add-service/add-service.component";
 import {AddAvailabilityComponent} from "./pages/add-availability/add-availability.component";
+import {ServiceSelectionComponent} from "./service-selection/service-selection.component";
+import {ProListComponent} from "./pro-list/pro-list.component";
 
 export const routes: Routes = [
   {
@@ -85,6 +87,14 @@ export const routes: Routes = [
   {
     path: "add-availability",
     component: AddAvailabilityComponent
+  },
+  {
+    path: "service-selection",
+    component: ServiceSelectionComponent
+  },
+  {
+    path: 'pro-list/:serviceId',
+    component: ProListComponent
   },
 
 
