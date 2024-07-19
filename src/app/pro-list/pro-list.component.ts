@@ -40,6 +40,6 @@ export class ProListComponent implements OnInit {
   }
 
   onSelectPro(proId: number): void {
-    this.router.navigate(['/book-rdv'], { queryParams: { proId } });
+    this.router.navigate(['/rdv'], { queryParams: { proId } });
   }
 }

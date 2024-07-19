@@ -7,16 +7,23 @@
       <div class="link">
         <nav>
           <ul>
-            <li><a href="#">Accueil</a></li>
-            <li *ngIf="!isAuthenticated"><a href="#">Inscription/Connexion</a></li>
-            <li><a href="#">Prendre Rendez-vous</a></li>
+            <li><a routerLink="/home">Accueil</a></li>
+            <li *ngIf="!isAuthenticated"><a routerLink="/register">Inscription/Connexion</a></li>
+            <li *ngIf="isAuthenticated && userRole === 'client'">
+              <a (click)="navigateToServiceSelection()">Prendre Rendez-vous</a>
+            </li>
+            <li *ngIf="isAuthenticated && userRole === 'pro'">
+              <a (click)="navigateToAddService()">Ajouter un Service</a>
+            </li>
             <li *ngIf="isAuthenticated">
-              <a href="#">{{ userName }}</a>
+              <a (click)="navigateToDashboard()">{{ userName }}</a>
               <button (click)="logout()">Déconnexion</button>
             </li>
           </ul>
         </nav>
       </div>
     </div>
+
+
   </section>
 </ion-content>
