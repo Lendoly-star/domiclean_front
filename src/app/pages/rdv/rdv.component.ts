@@ -1,12 +1,12 @@
-// @ts-ignore
-
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../auth/auth.service";
 import { RdvService } from "./rdv.service";
 import { IonicModule } from "@ionic/angular";
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {HeaderComponent} from "../../shared/header/header.component";
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DatePipe, NgForOf, NgIf } from "@angular/common";
+import { HeaderComponent } from "../../shared/header/header.component";
+import { Router } from "@angular/router";
+import { SelectionService } from "../../service-selection/selection.service";
 
 @Component({
   selector: 'app-rdv',
@@ -17,24 +17,47 @@ import {HeaderComponent} from "../../shared/header/header.component";
 })
 export class RdvComponent implements OnInit {
   rdvForm!: FormGroup;
-  typesOfService = ['Bricolage', 'Jardinage', 'Ménage'];
   services: any[] = [];
   availablePros: any[] = [];
   availabilities: any[] = [];
 
-  constructor(private fb: FormBuilder, private rdvService: RdvService) {
-  }
+  constructor(
+    private fb: FormBuilder,
+    private rdvService: RdvService,
+    private selectionService: SelectionService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.rdvForm = this.fb.group({
-      id_client: ['', Validators.required],
-      id_pro: ['', Validators.required],
-      service_id: ['', Validators.required],
-      date: ['', Validators.required],
+      id_client: [''],
+      id_pro: [''],
+      service_id: [''],
+      date: [''],
       time: ['', Validators.required],
       address: ['', Validators.required],
       description: ['']
     });
+
+    this.loadInitialData();
+  }
+
+  loadInitialData(): void {
+    const serviceId = this.selectionService.getSelectedService();
+    const proId = this.selectionService.getSelectedPro();
+    const clientId = this.selectionService.getClientId();
+    const date = this.selectionService.getSelectedDate();
+
+    if (serviceId && proId && clientId && date) {
+      this.rdvForm.patchValue({
+        service_id: serviceId,
+        id_pro: proId,
+        id_client: clientId,
+        date: date
+      });
+
+      this.loadAvailabilities(proId); // Charger les disponibilités du pro
+    }
   }
 
   loadServices(): void {
@@ -57,41 +80,52 @@ export class RdvComponent implements OnInit {
 
   onBookAppointment(): void {
     if (this.rdvForm.valid) {
-      this.rdvService.bookRdv(this.rdvForm.value).subscribe(response => {
+      const appointment = {
+        id_client: this.getLoggedInClientId(),
+        id_pro: this.selectionService.getSelectedPro(),
+        service_id: this.selectionService.getSelectedService(),
+        date: this.selectionService.getSelectedDate(),
+        time: this.rdvForm.controls['time'].value,
+        address: this.rdvForm.controls['address'].value,
+      };
+
+      console.log('Données envoyées:', appointment); // Ajout du console.log() ici
+
+      this.rdvService.bookRdv(appointment).subscribe(response => {
         console.log('Rendez-vous pris avec succès');
+        this.router.navigate(['/dashboard']);
         this.rdvForm.reset();
+      }, error => {
+        console.error('Erreur lors de la prise de rendez-vous :', error);
       });
+    } else {
+      console.error('Formulaire invalide');
     }
   }
 
-  setupServiceIdValueChanges(): void {
-    this.rdvForm.get('service_id')?.valueChanges.subscribe(service_id => {
-      const date = this.rdvForm.get('date')?.value;
-      const time = this.rdvForm.get('time')?.value;
-      if (service_id && date && time) {
-        this.fetchAvailablePros(service_id, date, time);
-      }
+  validateTime(control: AbstractControl): { [key: string]: any } | null {
+    const selectedTime = control.value;
+    const selectedDate = this.rdvForm.get('date')?.value;
+    if (!selectedTime || !selectedDate) {
+      return null;
+    }
+
+    const selectedDateTime = new Date(`${selectedDate}T${selectedTime}`);
+    const isValid = this.availabilities.some(a => {
+      const startTime = new Date(`${selectedDate}T${a.start_time}`);
+      const endTime = new Date(`${selectedDate}T${a.end_time}`);
+      return selectedDateTime >= startTime && selectedDateTime <= endTime;
     });
+    return isValid ? null : { invalidTime: true };
   }
 
-  setupDateValueChanges(): void {
-    this.rdvForm.get('date')?.valueChanges.subscribe(date => {
-      const service_id = this.rdvForm.get('service_id')?.value;
-      const time = this.rdvForm.get('time')?.value;
-      if (service_id && date && time) {
-        this.fetchAvailablePros(service_id, date, time);
-      }
-    });
-  }
+  getLoggedInClientId(): string {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('Token is missing');
+    }
 
-  setupTimeValueChanges(): void {
-    this.rdvForm.get('time')?.valueChanges.subscribe(time => {
-      const service_id = this.rdvForm.get('service_id')?.value;
-      const date = this.rdvForm.get('date')?.value;
-      if (service_id && date && time) {
-        this.fetchAvailablePros(service_id, date, time);
-      }
-    });
+    const decodedToken = JSON.parse(atob(token.split('.')[1])); // Assurez-vous que votre token est bien au format JWT
+    return decodedToken.id;
   }
-
 }

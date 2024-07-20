@@ -1,24 +1,23 @@
 <app-header></app-header>
 
 <ion-content>
-  <div class="list-container">
+  <div class="form-container">
     <div class="card">
       <div class="card-header">
         <h2>Professionnels disponibles</h2>
       </div>
       <div class="card-body">
-        <div class="pro-card" *ngFor="let pro of pros">
-          <div class="pro-details">
-            <p><strong>{{ pro.nom }} {{ pro.prenom }}</strong></p>
-            <p>Disponibilités: {{ pro.date }} de {{ pro.start_time }} à {{ pro.end_time }}</p>
-          </div>
-          <button class="btn btn-primary" (click)="onSelectPro(pro.id)">
+        <div class="form-group" *ngFor="let pro of pros">
+          <p>{{ pro.nom }} {{ pro.prenom }}</p>
+          <p>Disponibilités: {{ pro.date }} de {{ pro.start_time }} à {{ pro.end_time }}</p>
+          <button class="btn btn-primary" (click)="onSelectPro(pro.id, pro.date)">
             Choisir ce professionnel
           </button>
         </div>
       </div>
     </div>
   </div>
+
 </ion-content>
 
 

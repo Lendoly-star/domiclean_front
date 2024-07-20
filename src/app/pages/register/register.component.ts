@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {HeaderComponent} from "../../shared/header/header.component";
 import {IonicModule} from "@ionic/angular";
 import {AuthService} from "../auth/auth.service";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -14,7 +14,8 @@ import {Router} from "@angular/router";
         FormsModule,
         HeaderComponent,
         IonicModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        RouterLink
     ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'

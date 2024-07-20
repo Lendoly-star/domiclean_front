@@ -4,6 +4,7 @@ import { RdvService } from "../pages/rdv/rdv.service";
 import { IonicModule } from '@ionic/angular';
 import { NgForOf } from '@angular/common';
 import {HeaderComponent} from "../shared/header/header.component";
+import {SelectionService} from "../service-selection/selection.service";
 
 @Component({
   selector: 'app-pro-list',
@@ -23,7 +24,8 @@ export class ProListComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private rdvService: RdvService
+    private rdvService: RdvService,
+    private selectionService: SelectionService
   ) {}
 
   ngOnInit(): void {
@@ -39,7 +41,17 @@ export class ProListComponent implements OnInit {
     });
   }
 
-  onSelectPro(proId: number): void {
-    this.router.navigate(['/rdv'], { queryParams: { proId } });
+  onSelectPro(proId: number, date: string): void {
+    this.selectionService.setSelectedPro(proId);
+    this.selectionService.setSelectedDate(date);
+    this.selectionService.setSelectedService(this.serviceId);
+    console.log('Pro ID sélectionné:', this.selectionService.getSelectedPro());
+    console.log('Date sélectionnée:', this.selectionService.getSelectedDate());
+    console.log('Service ID sélectionné:', this.selectionService.getSelectedService());
+    this.router.navigate(['/rdv']);
   }
+
+
+
+
 }

@@ -5,6 +5,7 @@ import { RdvService } from "../pages/rdv/rdv.service";
 import { IonicModule } from '@ionic/angular';
 import { NgForOf } from '@angular/common';
 import {HeaderComponent} from "../shared/header/header.component";
+import {SelectionService} from "./selection.service";
 
 @Component({
   selector: 'app-service-selection',
@@ -25,7 +26,8 @@ export class ServiceSelectionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private rdvService: RdvService,
-    private router: Router
+    private router: Router,
+    private selectionService: SelectionService
   ) {}
 
   ngOnInit(): void {
@@ -45,6 +47,7 @@ export class ServiceSelectionComponent implements OnInit {
   onSubmit(): void {
     if (this.serviceForm.valid) {
       const serviceId = this.serviceForm.controls['service_id'].value;
+      this.selectionService.setSelectedService(serviceId);
       console.log(serviceId);
       this.router.navigate(['/pro-list', serviceId]);
     } else {

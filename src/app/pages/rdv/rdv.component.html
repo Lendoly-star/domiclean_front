@@ -1,40 +1,27 @@
 <app-header></app-header>
 
 <ion-content>
-  <!-- Formulaire de prise de rendez-vous -->
-  <<div class="form-container">
-  <div class="card">
-    <div class="card-header">
-      <h2>Prendre rendez-vous</h2>
-    </div>
-    <div class="card-body">
-      <form [formGroup]="rdvForm" (ngSubmit)="onBookAppointment()">
-        <div class="form-group">
-          <label for="service">Service:</label>
-          <select id="service" formControlName="service" class="form-control">
-            <option *ngFor="let service of services" [value]="service.id">{{ service.service_name }}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="date">Date:</label>
-          <select id="date" formControlName="date" class="form-control">
-            <option *ngFor="let availability of availabilities" [value]="availability.date">{{ availability.date }}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="time">Heure:</label>
-          <select id="time" formControlName="time" class="form-control">
-            <option *ngFor="let availability of availabilities" [value]="availability.time">{{ availability.time }}</option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Prendre rendez-vous</button>
-      </form>
+  <div class="form-container">
+    <div class="card">
+      <div class="card-header">
+        <h2>Prendre rendez-vous</h2>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="rdvForm" (ngSubmit)="onBookAppointment()">
+          <div class="form-group">
+            <label for="time">Heure:</label>
+            <input type="time" id="time" formControlName="time" class="form-control">
+            <div *ngIf="rdvForm.controls['time'].hasError('invalidTime') && rdvForm.controls['time'].touched" class="error">
+              L'heure sélectionnée n'est pas valide.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="address">Adresse:</label>
+            <input type="text" id="address" formControlName="address" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!rdvForm.valid">Prendre rendez-vous</button>
+        </form>
+      </div>
     </div>
   </div>
-</div>
-
-
-
-
-
 </ion-content>

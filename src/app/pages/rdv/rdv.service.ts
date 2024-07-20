@@ -44,11 +44,11 @@ export class RdvService {
   }
 
   getRdv(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/rdv/getRdv`);
+    return this.http.post<any>(`${this.apiUrl}/rdv/getRdv`, {});
   }
 
   getAvailablePros(serviceId: number, date: string, time: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/rdv/getAvailabilities`, {
+    return this.http.post(`${this.apiUrl}/pro/availabilities/:pro_id`, {
       params: { serviceId: serviceId.toString(), date, time }
     });
   }

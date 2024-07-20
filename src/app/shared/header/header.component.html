@@ -16,6 +16,9 @@
               <a (click)="navigateToAddService()">Ajouter un Service</a>
             </li>
             <li *ngIf="isAuthenticated">
+              <a (click)="navigateToDashboard()">Dashboard</a>
+            </li>
+            <li *ngIf="isAuthenticated">
               <a (click)="navigateToDashboard()">{{ userName }}</a>
               <button (click)="logout()">Déconnexion</button>
             </li>

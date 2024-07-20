@@ -47,6 +47,8 @@ export class AuthService {
     );
   }
 
+
+
   logout(): void {
     localStorage.removeItem('token');
     this.userSubject.next(null);
@@ -55,5 +57,9 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
+  }
+
+  getUser(): Observable<User | null> {
+    return this.userSubject.asObservable();
   }
 }
