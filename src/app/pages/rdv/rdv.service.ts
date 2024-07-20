@@ -19,6 +19,14 @@ export class RdvService {
     });
   }
 
+  getAppointmentsByProId(proId: number): Observable<any[]> {
+    return this.http.post<any[]>(`${this.apiUrl}/rdv/pro/${proId}`, {});
+  }
+
+  getAppointmentsByClientId(clientId: number): Observable<any[]> {
+    return this.http.post<any[]>(`${this.apiUrl}/rdv/client/${clientId}`, {});
+  }
+
   addService(service: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/pro/addService`, service, { headers: this.getAuthHeaders() });
   }

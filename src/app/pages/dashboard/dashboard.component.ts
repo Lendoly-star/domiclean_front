@@ -29,38 +29,28 @@ import {DatePipe, NgForOf, NgIf} from "@angular/common";
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit{
-  RdvForm!: FormGroup;
-  typesOfService: string[] = ['Bricolage', 'Jardinage', 'Ménage à domicile'];
   appointments: any[] = [];
-  userRole: 'client' | 'pro' | 'admin' | null = null;
-  rdv: any;
+  userRole!: string;
 
-  constructor(private fb: FormBuilder, private RdvService: RdvService) {}
+  constructor(private authService: AuthService, private rdvService: RdvService) {}
 
-  ngOnInit() {
-    this.RdvForm = this.fb.group({
-      date: ['', Validators.required],
-      serviceType: ['', Validators.required],
-      description: ['', Validators.required]
+  ngOnInit(): void {
+    this.authService.getUserInfo().subscribe(user => {
+      this.userRole = user.role;
+      this.loadAppointments(user.id, user.role);
     });
-
-    // this.fetchRdv();
   }
 
-  onSubmit() {
-    if (this.RdvForm.valid) {
-      this.RdvService.bookRdv(this.RdvForm.value).subscribe(() => {
-        // this.fetchRdv();
-        this.RdvForm.reset();
+  loadAppointments(userId: number, userRole: string): void {
+    if (userRole === 'pro') {
+      this.rdvService.getAppointmentsByProId(userId).subscribe(data => {
+        this.appointments = data;
+      });
+    } else {
+      this.rdvService.getAppointmentsByClientId(userId).subscribe(data => {
+        this.appointments = data;
       });
     }
   }
-
-  // fetchRdv() {
-  //   this.RdvService.getAllRdv().subscribe(data => {
-  //     this.appointments = data;
-  //   });
-  // }
-
 
 }
