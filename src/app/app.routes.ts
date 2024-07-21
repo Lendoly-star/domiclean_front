@@ -15,6 +15,7 @@ import {AddServiceComponent} from "./pages/add-service/add-service.component";
 import {AddAvailabilityComponent} from "./pages/add-availability/add-availability.component";
 import {ServiceSelectionComponent} from "./service-selection/service-selection.component";
 import {ProListComponent} from "./pro-list/pro-list.component";
+import {SuccesComponent} from "./succes/succes.component";
 
 export const routes: Routes = [
   {
@@ -96,6 +97,10 @@ export const routes: Routes = [
     path: 'pro-list/:serviceId',
     component: ProListComponent
   },
+  {
+    path: 'succes',
+    component: SuccesComponent
+  }
 
 
 

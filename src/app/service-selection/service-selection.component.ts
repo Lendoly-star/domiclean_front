@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { NgForOf } from '@angular/common';
 import {HeaderComponent} from "../shared/header/header.component";
 import {SelectionService} from "./selection.service";
+import {FooterComponent} from "../shared/footer/footer.component";
 
 @Component({
   selector: 'app-service-selection',
@@ -15,7 +16,8 @@ import {SelectionService} from "./selection.service";
     ReactiveFormsModule,
     IonicModule,
     NgForOf,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   styleUrls: ['./service-selection.component.scss']
 })

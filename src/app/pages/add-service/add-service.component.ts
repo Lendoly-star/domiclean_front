@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { NgForOf } from '@angular/common';
 import { Router } from "@angular/router";
+import {AddAvailabilityComponent} from "../add-availability/add-availability.component";
 
 @Component({
   selector: 'app-add-service',
@@ -16,7 +17,8 @@ import { Router } from "@angular/router";
     HeaderComponent,
     IonicModule,
     FooterComponent,
-    NgForOf
+    NgForOf,
+    AddAvailabilityComponent
   ],
   styleUrls: ['./add-service.component.scss']
 })
@@ -51,7 +53,7 @@ export class AddServiceComponent implements OnInit {
       this.rdvService.addService(serviceData).subscribe(response => {
         this.router.navigate(['/add-availability']);
         console.log('Services ajoutés avec succès');
-        this.serviceForm.reset();
+        // this.serviceForm.reset();
       }, error => {
         console.error('Erreur lors de l\'ajout des services :', error);
       });

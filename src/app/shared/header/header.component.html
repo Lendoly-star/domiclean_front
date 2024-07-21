@@ -1,5 +1,5 @@
 <ion-content>
-  <section>
+  <section class="header-section">
     <div class="container">
       <div class="logo-title">
         <img src="{{logo}}" alt="Logo Domiclean" class="logo">
@@ -20,13 +20,11 @@
             </li>
             <li *ngIf="isAuthenticated">
               <a (click)="navigateToDashboard()">{{ userName }}</a>
-              <button (click)="logout()">Déconnexion</button>
+              <button (click)="logout()" class="logout-btn">Déconnexion</button>
             </li>
           </ul>
         </nav>
       </div>
     </div>
-
-
   </section>
 </ion-content>

@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import { RdvService } from '../rdv/rdv.service';
 import { IonicModule } from '@ionic/angular';
 import {NgForOf} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-availability',
@@ -15,7 +16,7 @@ export class AddAvailabilityComponent implements OnInit {
   availabilityForm!: FormGroup;
   services: any[] = [];
 
-  constructor(private fb: FormBuilder, private rdvService: RdvService) {}
+  constructor(private fb: FormBuilder, private rdvService: RdvService, private router: Router) {}
 
   ngOnInit(): void {
     this.availabilityForm = this.fb.group({
@@ -45,6 +46,7 @@ export class AddAvailabilityComponent implements OnInit {
 
       this.rdvService.addAvailability({ availabilities: [availability] }).subscribe(response => {
         console.log('Disponibilité ajoutée avec succès');
+        this.router.navigate(['/success'])
         this.availabilityForm.reset();
       }, error => {
         console.error('Erreur lors de l\'ajout des disponibilités :', error);
